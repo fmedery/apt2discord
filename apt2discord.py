@@ -32,14 +32,13 @@ def send_update_message(update_list):
 
 
 if __name__ == "__main__":
-    if "WEBHOOK" in os.getenv:
-        update_package_list()  # Update package lists first
-        available_updates = check_for_updates()
-        if available_updates:
-            update_list = check_for_updates()  # Replace with your function call
-            send_update_message(update_list)
-            # print("The following packages have updates available:")
-            # for package in available_updates:
-            #     print(package)
-        else:
-            print(".env file is missing")
+    update_package_list()  # Update package lists first
+    available_updates = check_for_updates()
+    if available_updates:
+        update_list = check_for_updates()  # Replace with your function call
+        send_update_message(update_list)
+        # print("The following packages have updates available:")
+        # for package in available_updates:
+        #     print(package)
+    else:
+        print(".env file is missing")
