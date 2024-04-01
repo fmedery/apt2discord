@@ -40,5 +40,3 @@ if __name__ == "__main__":
         # print("The following packages have updates available:")
         # for package in available_updates:
         #     print(package)
-    else:
-        print(".env file is missing")
