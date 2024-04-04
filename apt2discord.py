@@ -1,14 +1,7 @@
-import requests, subprocess, os, dotenv
-
-dotenv.load_dotenv()
+import requests, subprocess, os, dotenv, pathlib, sys
 
 webhook_url = os.getenv('WEBHOOK')
 fqdn=os.uname()[1]
-
-# def update_package_list():
-#     """Updates the package lists for available packages."""
-#     command = "sudo apt update -qqq >/dev/null 2>&1"
-#     os.system(command)
 
 def update_package_list():
     """Updates the package lists for available packages."""
@@ -35,11 +28,19 @@ def send_update_message(update_list):
 
 
 if __name__ == "__main__":
+    
+    if len(sys.argv) < 2:  # Check for at least one argument
+        print("Error: Please provide the envfile location. \n")
+        print("Usage:")
+        print(os.path.basename(sys.argv[0]) + " envfile_location")
+        sys.exit(1)  # Exit with an error code (optional)
+    else:
+        dotenv_path = pathlib.Path(sys.argv[1])
+        dotenv.load_dotenv(dotenv_path)
+
     update_package_list()  # Update package lists first
+
     available_updates = check_for_updates()
     if available_updates:
         update_list = check_for_updates()  # Replace with your function call
         send_update_message(update_list)
-        # print("The following packages have updates available:")
-        # for package in available_updates:
-        #     print(package)
