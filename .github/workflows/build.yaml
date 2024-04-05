@@ -25,9 +25,18 @@ jobs:
       - name: Create Executable (Linux)
         run: pyinstaller --onefile apt2discord.py
 
-      - name: Upload Artifact (Linux)
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux-artifact
-          path: dist/*
+      - name: Create Release Notes (Optional)
+            # Uncomment and modify this step to generate release notes automatically
+            # run: echo "Update notes here..." > release_notes.txt
 
+      - id: release_name
+        run: echo "v${{ github.sha }}"
+        # This step outputs the release name based on the commit SHA
+
+      - uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.CREATE_RELEASE }}
+        with:
+          tag_name: ${{ steps.release_name.outputs }}
+          release_name: ${{ steps.release_name.outputs }}
+          body_file: release_notes.txt  # Point to your release notes file if created
