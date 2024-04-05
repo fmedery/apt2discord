@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout
       - uses: actions/checkout@v3
 
       - name: Set up Python 3.12.2
@@ -19,24 +20,21 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Build with PyInstaller
-        run: pip install pyinstaller
-
       - name: Create Executable (Linux)
+        run: pip install pyinstaller
         run: pyinstaller --onefile apt2discord.py
 
-      - name: Create Release Notes (Optional)
-            # Uncomment and modify this step to generate release notes automatically
-            # run: echo "Update notes here..." > release_notes.txt
-
-      - id: release_name
-        run: echo "v${{ github.sha }}"
-        # This step outputs the release name based on the commit SHA
-
-      - uses: actions/create-release@v1
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.CREATE_RELEASE }}
+          GITHUB_TOKEN: ${{ secrets.CREATE_RELEASE }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ steps.release_name.outputs }}
-          release_name: ${{ steps.release_name.outputs }}
-          body_file: release_notes.txt  # Point to your release notes file if created
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
