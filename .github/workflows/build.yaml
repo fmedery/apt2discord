@@ -23,7 +23,7 @@ jobs:
         run: pip install pyinstaller
 
       - name: Create Executable (Linux)
-        run: pyinstaller --onefile apt2discord
+        run: pyinstaller --onefile apt2discord.py
 
       - name: Upload Artifact (Linux)
         uses: actions/upload-artifact@v3
