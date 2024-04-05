@@ -1,0 +1,33 @@
+name: Python CI with PyInstaller
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python 3.12.2
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12.2
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: pip install pyinstaller
+
+      - name: Create Executable (Linux)
+        run: pyinstaller --onefile apt2discord
+
+      - name: Upload Artifact (Linux)
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-artifact
+          path: dist/*
+
