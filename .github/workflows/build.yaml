@@ -3,7 +3,12 @@ name: Python CI with PyInstaller
 on:
   push:
     branches: [ main ]
-
+  workflow_dispatch:
+    inputs:
+      buildType:
+        description: 'Type of build (debug/release)'
+        required: true
+        default: 'debug'
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
