@@ -27,9 +27,9 @@ def send_update_message(update_list):
 if __name__ == "__main__":
     webhook_url = os.getenv('WEBHOOK')
     current_date = datetime.datetime.now().strftime("%b %d %H:%M:%S")
-    if None in webhook_url:
-        print(f'[{current_date}] set WEBHOOK env variables\n Existing')
-        exit(1)
+    # if None in webhook_url:
+    #     print(f'[{current_date}] set WEBHOOK env variables\n Existing')
+    #     exit(1)
      
     update_package_list()  # Update package lists first
 
