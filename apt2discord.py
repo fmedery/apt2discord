@@ -1,9 +1,8 @@
-import requests, subprocess, os, dotenv, pathlib, sys
+import requests, subprocess, os, datetime
 
 def update_package_list():
     """Updates the package lists for available packages."""
     output = subprocess.check_output(["apt", "update"], stderr=subprocess.DEVNULL, text=True) # Capture as text
-
 
 def check_for_updates():
     """Checks for available Debian package updates and returns a list of those with new versions."""
@@ -26,17 +25,12 @@ def send_update_message(update_list):
 
 
 if __name__ == "__main__":
-    
-    if len(sys.argv) < 2:  # Check for at least one argument
-        print("Error: Please provide the conf_file location. \n")
-        print("Usage:")
-        print(os.path.basename(sys.argv[0]) + " conf_file_location")
-        sys.exit(1)  # Exit with an error code (optional)
-    else:
-        dotenv_path = pathlib.Path(sys.argv[1])
-        dotenv.load_dotenv(dotenv_path)
-        webhook_url = os.getenv('WEBHOOK')
-    
+    webhook_url = os.getenv('WEBHOOK')
+    current_date = datetime.datetime.now().strftime("%b %d %H:%M:%S")
+    if None in webhook_url:
+        print(f'[{current_date}] set WEBHOOK env variables\n Existing')
+        exit(1)
+     
     update_package_list()  # Update package lists first
 
     available_updates = check_for_updates()
