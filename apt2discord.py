@@ -9,7 +9,7 @@ def check_for_updates():
     output = subprocess.check_output(["apt", "list", "--upgradable"], stderr=subprocess.DEVNULL, text=True)
     updates = []
     for line in output.splitlines():
-        if line.startswith(line):
+        if not line.startswith("Listing..."):
             updates.append(line)
             # updates.append(line.split()[0])
     return updates
