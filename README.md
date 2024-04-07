@@ -22,7 +22,7 @@ pyenv local apt2discord
 pip install -r requirements.txt
 
 #compile code
-pyinstaller --onefile apt2discord.py
+pyinstaller --name apt2discord --onefile apt2discord.py
 ```
 
 ## Usage

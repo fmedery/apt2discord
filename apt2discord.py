@@ -1,4 +1,4 @@
-import requests, subprocess, os
+import requests, subprocess, os, datetime
 
 def update_package_list():
     """Updates the package lists for available packages."""
@@ -26,6 +26,8 @@ def send_update_message(update_list):
 if __name__ == "__main__":
     webhook_url = os.getenv('WEBHOOK')
     
+    current_date = datetime.datetime.now().strftime("%b %d %H:%M:%S")
+
     update_package_list()  # Update package lists first
 
     available_updates = check_for_updates()
