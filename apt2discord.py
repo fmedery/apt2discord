@@ -10,8 +10,8 @@ def check_for_updates():
     updates = []
     for line in output.splitlines():
         if not line.startswith("Listing..."):
-            updates.append(line)
-            # updates.append(line.split()[0])
+            #updates.append(line)
+            updates.append(line.split()[0])
     return updates
 
 def send_update_message(update_list):
