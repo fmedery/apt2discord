@@ -5,8 +5,7 @@ A lightweight Python script that monitors APT package updates and sends notifica
 > ⚠️ **Important**: This tool only works on Debian-based systems (Debian, Ubuntu, Linux Mint, etc.) as it relies on the APT package manager. It will not work on non-Debian based distributions like Fedora, RHEL, Arch Linux, etc.
 
 ## Features
-- Automatic package list updates using `apt update`
-- Detection of available package upgrades
+- Automatic package list updates using `apt update`- Detection of available package upgrades
 - Discord notifications including:
   - Server hostname
   - Timestamp
@@ -16,10 +15,8 @@ A lightweight Python script that monitors APT package updates and sends notifica
 - Configurable via command line arguments or environment variables
 - Error handling and logging
 
-## Requirements
+## Requirements (for running the binary)
 - Debian-based Linux distribution
-- Python 3.6+
-- `requests` library
 - Root/sudo access (for apt commands)
 - Discord webhook URL
 
@@ -110,6 +107,3 @@ This triggers GitHub Actions to:
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
-
-## License
-MIT License

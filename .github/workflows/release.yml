@@ -12,14 +12,14 @@ permissions:
 jobs:
   build:
     name: Build on ${{ matrix.os }} for ${{ matrix.arch }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-20.04  # Changed from ubuntu-latest to ubuntu-20.04
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             arch: x86_64
             artifact_name: apt2discord-x86_64
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             arch: aarch64
             artifact_name: apt2discord-arm64
 
@@ -33,7 +33,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: '3.9'  # Changed to an older Python version
         
     - name: Install dependencies
       run: |
@@ -50,7 +50,7 @@ jobs:
       uses: uraimo/run-on-arch-action@v2
       with:
         arch: aarch64
-        distro: ubuntu22.04
+        distro: ubuntu20.04  # Changed to Ubuntu 20.04
         install: |
           apt-get update
           apt-get install -y python3-pip python3-dev
