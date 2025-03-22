@@ -26,9 +26,8 @@ A lightweight Python script that monitors APT package updates and sends notifica
 ## Installation
 
 ### Option 1: Pre-built Binaries (Recommended)
-> **Note**: Before using the releases link below, replace `GITHUB_USERNAME` with your actual GitHub username.
 
-Download the appropriate binary for your system architecture from the [Releases page](https://github.com/GITHUB_USERNAME/apt2discord/releases):
+Download the appropriate binary for your system architecture from the [Releases page](https://github.com/fmedery/apt2discord/releases):
 
 - `apt2discord-x86_64`: For 64-bit x86 systems
 - `apt2discord-arm64`: For ARM64 systems
@@ -36,7 +35,7 @@ Download the appropriate binary for your system architecture from the [Releases 
 ### Option 2: From Source
 ```bash
 # Clone the repository
-git clone https://github.com/GITHUB_USERNAME/apt2discord.git
+git clone https://github.com/fmedery/apt2discord.git
 cd apt2discord
 
 # Install dependencies
