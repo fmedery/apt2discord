@@ -36,7 +36,7 @@ sudo dist/apt2discord conf_file_location
 ## Installation
 
 ### Option 1: Pre-built Binaries (Recommended)
-Download the appropriate binary for your system architecture from the [Releases page](https://github.com/yourusername/apt2discord/releases):
+Download the appropriate binary for your system architecture from the [Releases page](https://github.com/fmedery/apt2discord/releases):
 
 - `apt2discord-x86_64`: For 64-bit x86 systems (most desktop/server computers)
 - `apt2discord-arm64`: For ARM64 systems (like Raspberry Pi running 64-bit OS)
