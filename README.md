@@ -1,5 +1,7 @@
 # apt2discord
 
+A lightweight Python script that monitors APT package updates and sends notifications to Discord via webhooks. Designed for automated running via cron.
+
 ## info
 Send the list of upgradeable debian packages available to discord using webhook
 
@@ -33,7 +35,7 @@ sudo dist/apt2discord conf_file_location
 
 ## Installation
 
-### Pre-built Binaries
+### Option 1: Pre-built Binaries (Recommended)
 Download the appropriate binary for your system architecture from the [Releases page](https://github.com/yourusername/apt2discord/releases):
 
 - `apt2discord-x86_64`: For 64-bit x86 systems (most desktop/server computers)
