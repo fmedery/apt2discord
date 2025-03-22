@@ -11,11 +11,25 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    
+    name: Build on ${{ matrix.os }} for ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch: x86_64
+            artifact_name: apt2discord-x86_64
+          - os: ubuntu-latest
+            arch: aarch64
+            artifact_name: apt2discord-arm64
+
     steps:
     - uses: actions/checkout@v4
     
+    - name: Set up QEMU
+      if: matrix.arch == 'aarch64'
+      uses: docker/setup-qemu-action@v3
+      
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -25,16 +39,30 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pyinstaller requests
-        
-    - name: Build binary
+
+    - name: Build binary (x86_64)
+      if: matrix.arch == 'x86_64'
       run: |
-        pyinstaller --name apt2discord --onefile apt2discord.py
-        
+        pyinstaller --name ${{ matrix.artifact_name }} --onefile apt2discord.py
+
+    - name: Build binary (ARM64)
+      if: matrix.arch == 'aarch64'
+      uses: uraimo/run-on-arch-action@v2
+      with:
+        arch: aarch64
+        distro: ubuntu22.04
+        install: |
+          apt-get update
+          apt-get install -y python3-pip python3-dev
+        run: |
+          pip3 install pyinstaller requests
+          pyinstaller --name ${{ matrix.artifact_name }} --onefile apt2discord.py
+          
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          dist/apt2discord
+          dist/${{ matrix.artifact_name }}
         draft: false
         prerelease: false
         generate_release_notes: true
