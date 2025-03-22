@@ -16,10 +16,8 @@ A lightweight Python script that monitors APT package updates and sends notifica
 - Configurable via command line arguments or environment variables
 - Error handling and logging
 
-## Requirements
+## Requirements (for running the binary)
 - Debian-based Linux distribution
-- Python 3.6+
-- `requests` library
 - Root/sudo access (for apt commands)
 - Discord webhook URL
 
