@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*' # Trigger on version tags
+      - 'v*'
 
 # Add permissions block
 permissions:
@@ -11,58 +11,39 @@ permissions:
 
 jobs:
   build:
-    name: Build on ${{ matrix.os }} for ${{ matrix.arch }}
-    runs-on: ubuntu-22.04  # Changed from ubuntu-20.04 to ubuntu-22.04
+    name: Build Go Binary
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         include:
-          - os: ubuntu-22.04
-            arch: x86_64
-            artifact_name: apt2discord-x86_64
-          - os: ubuntu-22.04
-            arch: aarch64
-            artifact_name: apt2discord-arm64
+          - arch: amd64
+            goarch: amd64
+            artifact: apt2discord-amd64
+          - arch: arm64
+            goarch: arm64
+            artifact: apt2discord-arm64
 
     steps:
     - uses: actions/checkout@v4
     
-    - name: Set up QEMU
-      if: matrix.arch == 'aarch64'
-      uses: docker/setup-qemu-action@v3
-      
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Set up Go
+      uses: actions/setup-go@v5
       with:
-        python-version: '3.8'  # Changed to Python 3.8 for better compatibility
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pyinstaller==5.13.2 requests  # Pinned PyInstaller version
+        go-version: '1.22'
 
-    - name: Build binary (x86_64)
-      if: matrix.arch == 'x86_64'
+    - name: Build Binary
+      env:
+        GOOS: linux
+        GOARCH: ${{ matrix.goarch }}
+        CGO_ENABLED: 0
       run: |
-        pyinstaller --name ${{ matrix.artifact_name }} --onefile apt2discord.py
+        go build -o ${{ matrix.artifact }} -ldflags="-s -w" main.go
 
-    - name: Build binary (ARM64)
-      if: matrix.arch == 'aarch64'
-      uses: uraimo/run-on-arch-action@v2
-      with:
-        arch: aarch64
-        distro: ubuntu22.04  # Changed to Ubuntu 22.04
-        install: |
-          apt-get update
-          apt-get install -y python3-pip python3-dev
-        run: |
-          pip3 install pyinstaller==5.13.2 requests  # Pinned PyInstaller version
-          pyinstaller --name ${{ matrix.artifact_name }} --onefile apt2discord.py
-          
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          dist/${{ matrix.artifact_name }}
+          ${{ matrix.artifact }}
         draft: false
         prerelease: false
         generate_release_notes: true
