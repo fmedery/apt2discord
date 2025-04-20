@@ -114,7 +114,5 @@ func main() {
 		if err := sendDiscordMessage(updates, webhookURL); err != nil {
 			log.Fatal("Failed to send Discord message:", err)
 		}
-	} else {
-		log.Println("No updates available")
 	}
 } 
